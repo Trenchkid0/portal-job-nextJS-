@@ -13,21 +13,21 @@ export type JobType = {
 	location: string;
 	desc: string;
 	category: string[];
-	// needs: number;
-	// applicants: number;
+	needs: number;
+	applicants: number;
 	// skills: string[];
 };
 
-// export type optionType = {
-// 	id: string;
-// 	label: string;
-// };
+export type optionType = {
+	id: string;
+	label: string;
+};
 
-// export type filterFormType = {
-// 	label: string;
-// 	name: string;
-// 	items: optionType[];
-// };
+export type filterFormType = {
+	label: string;
+	name: string;
+	items: optionType[];
+};
 
 // export type CompanyTeamType = {
 // 	id: string;
