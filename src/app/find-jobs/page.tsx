@@ -46,9 +46,8 @@ export default function FindJobs({}: FindJobsProps) {
     console.log(val)
   }
   return (
-    <>
-      <ExpoloreDataContainer formFilter={form} onSubmitFilter={onSubmitFormFilter} filterForm={FILTER_FORMS} title='Dream jobs' subtitle='Find your next career at companies like HubSpot, Nike,and Dropbox' loading={false} type='job' data={dummyData} />
+
+      <ExpoloreDataContainer formFilter={form} onSubmitFilter={onSubmitFormFilter} filterForm={FILTER_FORMS} title='Dream jobs' subtitle='Find your next career at companies like HubSpot, Nike,and Dropbox' loading={false} type='job' data={dummyData} /> 
     
-    </>
   )
 }
