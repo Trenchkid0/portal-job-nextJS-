@@ -4,6 +4,7 @@ import { Progress } from '@/components/ui/progress'
 import { Separator } from '@/components/ui/separator'
 import { JobType } from '@/types'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 
 type JobCardProps = {
@@ -11,8 +12,10 @@ type JobCardProps = {
 }&JobType
 
 export default function JobCard({applicants,category,desc,image,jobType,location,name,needs,type}: JobCardProps) {
+
+    const router = useRouter()
   return (
-    <div className='w-full border mb-5 p-6 border-border flex flex-row justify-between items-center'>
+    <div onClick={()=> router.push('/detail/job/1')} className='w-full border mb-5 p-6 border-border flex flex-row justify-between items-center'>
         <div className='flex flex-row items-start gap-6'>
             <div>
                 <Image  src={image} alt={image} width={64} height={64}/>
