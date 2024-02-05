@@ -5,6 +5,7 @@ import Image from 'next/image'
 import pattern from '../../public/images/pattern.png'
 import Navbar from '@/components/layouts/Navbar'
 import Footer from '@/components/layouts/Footer'
+import AuthProvider from '@/provider/AuthProvider'
 
 const epilogue = Epilogue({ subsets: ['latin'] })
 
@@ -21,14 +22,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={epilogue.className}>
-        <Navbar/>
-        <main>
-          <div className='w-full h-screen absolute top-0 -z-10'/>
-            
-          {children}
-        
-        </main>
-        <Footer/>
+        <AuthProvider>
+
+          <Navbar/>
+          <main>
+              
+            {children}
+          
+          </main>
+          <Footer/>
+
+        </AuthProvider>
       </body>
     </html>
   )
