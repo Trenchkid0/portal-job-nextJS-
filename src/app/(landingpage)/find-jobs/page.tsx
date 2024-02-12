@@ -1,53 +1,48 @@
 "use client";
-import ExpoloreDataContainer from '@/containers/ExploreDataContainer'
-import { formFilterSchema } from '@/lib/form-schema'
-import React from 'react'
 
+import ExploreDataContainer from "@/containers/ExploreDataContainer";
+import useCategoryJobFilter from "@/hooks/useCategoryJobFilter";
+import { useJobs } from "@/hooks/useJobs";
+
+import { formFilterSchema } from "@/lib/form-schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { JobType, filterFormType } from '@/types';
-import { CATEGORIES_OPTIONS } from '@/constants';
 
-type FindJobsProps = {}
-
-
-const FILTER_FORMS: filterFormType[] = [
-  {
-    name: 'categories',
-    label: 'Categories',
-    items: CATEGORIES_OPTIONS,
-  }
-]
-
-const dummyData:JobType[] =[
-  {
-    applicants: 5,
-    category: ['Marketing','Sosial Media'],
-    desc:'test',
-    image: '/images/company2.png',
-    jobType: 'Full-Time',
-    location: 'Madrid, Spain',
-    name: 'Social Media Assist',
-    needs:10,
-    type: 'Agency'
-  }
-]
-
-export default function FindJobs({}: FindJobsProps) {
-  const form = useForm<z.infer<typeof formFilterSchema>>({
-		resolver: zodResolver(formFilterSchema),
+export default function FindJobsPage() {
+  const formFilter = useForm<z.infer<typeof formFilterSchema>>({
+    resolver: zodResolver(formFilterSchema),
     defaultValues: {
-      categories: []
-    }
-	});
+      categories: [],
+    },
+  });
 
-  const onSubmitFormFilter = async(val:z.infer<typeof formFilterSchema>) => {
-    console.log(val)
-  }
+  const { filters } = useCategoryJobFilter();
+
+  const [categories, setCategories] = useState<string[]>([]);
+
+  const { jobs, isLoading, mutate } = useJobs(categories);
+
+  const onSubmitFormFilter = async (val: z.infer<typeof formFilterSchema>) => {
+    setCategories(val.categories);
+  };
+
+  useEffect(() => {
+    mutate();
+  }, [categories]);
+
   return (
-
-      <ExpoloreDataContainer formFilter={form} onSubmitFilter={onSubmitFormFilter} filterForm={FILTER_FORMS} title='Dream jobs' subtitle='Find your next career at companies like HubSpot, Nike,and Dropbox' loading={false} type='job' data={dummyData} /> 
-    
-  )
+    <ExploreDataContainer
+      formFilter={formFilter}
+      onSubmitFilter={onSubmitFormFilter}
+      filterForm={filters}
+      title="dream job"
+      subtitle="Find your next career at companies like HubSpot, Nike,
+			and Dropbox"
+      loading={isLoading}
+      type="job"
+      data={jobs}
+    />
+  );
 }
