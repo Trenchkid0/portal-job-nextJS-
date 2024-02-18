@@ -3,6 +3,7 @@ import React from "react";
 import company from "/images/comapny2.png";
 import { Badge } from "@/components/ui/badge";
 import { CompanyType } from "@/types";
+import { useRouter } from "next/navigation";
 
 type CompanyCardProps = {} & CompanyType;
 
@@ -12,9 +13,14 @@ export default function CompanyCard({
   name,
   image,
   totalJobs,
+  id,
 }: CompanyCardProps) {
+  const router = useRouter();
   return (
-    <div className="border border-border p-6">
+    <div
+      className="border border-border p-6"
+      onClick={() => router.push("/detail/company/" + id)}
+    >
       <div className="flex flex-row justify-between items-start ">
         <Image src={image} alt="company" width={66} height={66} />
         <Badge>{totalJobs} Jobs</Badge>
